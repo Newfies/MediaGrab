@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     // Get Video ID From URL
                     report.innerText = `Valid YouTube URL Entered With Video ID ${videoId}`;
                     $.get("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + videoId + "&key=" + "AIzaSyAZCjFb4Gjmw6o_mHzsaGucQ86-cA8t9Sw", function(data) {
-                        alert(data.items[0].snippet.title);
+                        report.innerText = data.items[0].snippet.title;
                     });
                 } else {
                     report.innerText = `Invalid YouTube URL Entered`;
