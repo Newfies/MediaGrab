@@ -17,8 +17,17 @@ document.addEventListener("DOMContentLoaded", function(){
                 if (videoId) {
                     // Get Video ID From URL
                     report.innerText = `Valid YouTube URL Entered With Video ID ${videoId}`;
-                    $.get("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + videoId + "&key=" + "AIzaSyAZCjFb4Gjmw6o_mHzsaGucQ86-cA8t9Sw", function(data) {
-                        report.innerText = data.items[0].snippet.title;
+                    $.get("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + videoId + "&key=AIzaSyAZCjFb4Gjmw6o_mHzsaGucQ86-cA8t9Sw")
+                        .done(function(data) {
+                            if (data.items.length > 0) {
+                                report.innerText = data.items[0].snippet.title;
+                            } else {
+                                report.innerText = `Video not found.`;
+                            }
+                        })
+                        .fail(function(jqXHR, textStatus, errorThrown) {
+                            console.error("API request failed:", textStatus, errorThrown);
+                            report.innerText = `Error retrieving video information: ${errorThrown}`;
                     });
                 } else {
                     report.innerText = `Invalid YouTube URL Entered`;
